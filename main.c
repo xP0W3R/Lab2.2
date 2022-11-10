@@ -8,12 +8,12 @@ double num_comput_integral_r_re(double left_boundary_a, double right_boundary_b,
 double num_comput_integral_trapez (double left_boundary_a, double right_boundary_b, unsigned int intervals);
 double num_comput_integral_Simps (double left_boundary_a, double right_boundary_b, unsigned int intervals);
 double integrand_expression( double x );
-double measurement_error;
 
 double integrand_expression( double x ) // основна функція
         {
             return (1+sqrt(x))/pow(x,2);
         }
+
 
 int main() //інтерфейс
 {
@@ -60,44 +60,36 @@ system("cls");
       {
           case 1:
               {
-                  int Delta = integrvalue(left_boundary_a, right_boundary_b, var);
-                  double I1 = num_comput_integral_l_re(left_boundary_a, right_boundary_b, Delta);
                   integral_s = num_comput_integral_l_re(left_boundary_a, right_boundary_b, intervals);
                   printf("\n\n\t======*Left Rectangles method*======\n");
-                  printf("\n\ta = %.2lf \n\tb = %.2lf \n\tIntegral = %.8lf \n\tN = %d \n\tI1 = %.8lf \n\tDelta = %d",left_boundary_a, right_boundary_b, integral_s, intervals, I1, Delta);
+                  printf("\n\ta = %.2lf \n\tb = %.2lf \n\tIntegral = %.8lf \n\tN = %d\n\n",left_boundary_a, right_boundary_b, integral_s, intervals);
               }
           break;
 
 
           case 2:
               {
-                  int Delta = integrvalue(left_boundary_a, right_boundary_b, var);
-                  double I1 = num_comput_integral_r_re(left_boundary_a, right_boundary_b, Delta);
                   integral_s = num_comput_integral_l_re(left_boundary_a, right_boundary_b, intervals);
                   printf("\n\n\t======*Right Rectangles method*======\n");
-                  printf("\n\ta = %.2lf \n\tb = %.2lf \n\tIntegral = %.8lf \n\tN = %d \n\tI1 = %.8lf \n\tDelta = %d",left_boundary_a, right_boundary_b, integral_s, intervals, I1, Delta);
+                  printf("\n\ta = %.2lf \n\tb = %.2lf \n\tIntegral = %.8lf \n\tN = %d\n\n",left_boundary_a, right_boundary_b, integral_s, intervals);
               }
           break;
 
 
           case 3:
               {
-                  int Delta = integrvalue(left_boundary_a, right_boundary_b, var);
-                  double I1 = num_comput_integral_trapez(left_boundary_a, right_boundary_b, Delta);
                   integral_s = num_comput_integral_trapez(left_boundary_a, right_boundary_b, intervals);
                   printf("\n\n\t======*Trapezium method *======\n");
-                  printf("\n\ta = %.2lf \n\tb = %.2lf \n\tIntegral = %.8lf \n\tN = %d \n\tI1 = %.8lf \n\tDelta = %d",left_boundary_a, right_boundary_b, integral_s, intervals, I1, Delta);
+                  printf("\n\ta = %.2lf \n\tb = %.2lf \n\tIntegral = %.8lf \n\tN = %d\n\n",left_boundary_a, right_boundary_b, integral_s, intervals);
               }
           break;
 
 
           case 4:
               {
-                  int Delta = integrvalue(left_boundary_a, right_boundary_b, var);
-                  double I1 = num_comput_integral_Simps(left_boundary_a, right_boundary_b, Delta);
                   integral_s = num_comput_integral_Simps(left_boundary_a, right_boundary_b, intervals);
                   printf("\n\n\t======*Simps's method*======\n");
-                  printf("\n\ta = %.2lf \n\tb = %.2lf \n\tIntegral = %.8lf \n\tN = %d \n\tI1 = %.8lf \n\tDelta = %d",left_boundary_a, right_boundary_b, integral_s, intervals, I1, Delta);
+                  printf("\n\ta = %.2lf \n\tb = %.2lf \n\tIntegral = %.8lf \n\tN = %d\n\n",left_boundary_a, right_boundary_b, integral_s, intervals);
               }
           break;
             }
@@ -156,68 +148,12 @@ double num_comput_integral_Simps (double left_boundary_a, double right_boundary_
             h = (right_boundary_b - left_boundary_a) / intervals;
             for (int i = 1; i <= (intervals - 1); i++)
                 {
-                    if (i % 2 != 0)
+                    if (i%2!=0)
                     sum1 += integrand_expression(left_boundary_a + h * i);
                     else
                     sum2 += integrand_expression(left_boundary_a+ h * i);
                 }
   return (integrand_expression(left_boundary_a) + integrand_expression(right_boundary_b) + 4 * sum1 + 2 * sum2) * h / 3;
         }
-
-int integrvalue(double left_boundary_a, double right_boundary_b, int var)
-{
-  switch (var)
-  {
-  case 1:
-  {
-    int Delta = 0, I1, I2;
-    do
-    {
-      Delta += 2;
-      I1 = num_comput_integral_l_re(left_boundary_a, right_boundary_b, Delta);
-      I2 = num_comput_integral_l_re(left_boundary_a,right_boundary_b, Delta + 2);
-    } while (fabs(I2 - I1) > measurement_error);
-    return Delta;
-  }
-  break;
-  case 2:
-  {
-    int Delta = 0, I1, I2;
-    do
-    {
-      Delta += 2;
-      I1 = num_comput_integral_r_re(left_boundary_a, right_boundary_b, Delta);
-      I2 = num_comput_integral_r_re(left_boundary_a, right_boundary_b, Delta + 2);
-    } while (fabs(I2 - I1) > measurement_error);
-    return Delta;
-  }
-  break;
-  case 3:
-  {
-    int Delta = 0, I1, I2;
-    do
-    {
-      Delta += 2;
-      I1 = num_comput_integral_trapez(left_boundary_a, right_boundary_b, Delta);
-      I2 = num_comput_integral_trapez(left_boundary_a, right_boundary_b, Delta + 2);
-    } while (fabs(I2 - I1) > measurement_error);
-    return Delta;
-  }
-  break;
-  case 4:
-  {
-    int Delta = 0, I1, I2;
-    do
-    {
-      Delta += 2;
-      I1 = num_comput_integral_Simps(left_boundary_a, right_boundary_b, Delta);
-      I2 = num_comput_integral_Simps(left_boundary_a, right_boundary_b, Delta + 2);
-    } while (fabs(I2 - I1) > measurement_error);
-    return Delta;
-  }
-  break;
-  }
-}
-
 
 
