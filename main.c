@@ -93,8 +93,8 @@ system("cls");
               }
           break;
             }
-        }
         return 0;
+        }
 }
 
 
