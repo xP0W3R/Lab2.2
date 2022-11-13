@@ -21,6 +21,9 @@ int main() //інтерфейс
     double measurement_error=0, I1=0, I2=0;
     int intervals, var, i;
     double integral_s=0;
+    double par1 = 20;
+    double par2 = 3;
+    double min_variable;
 
 
 while(1)
@@ -98,14 +101,13 @@ system("cls");
 }
 
 
-
 double num_comput_integral_l_re(double left_boundary_a, double right_boundary_b, unsigned int intervals)//метод лівих прямокутників
         {
             double integral_s=0, x=0, h;
             unsigned int i;
-            h = ( right_boundary_b - left_boundary_a ) / intervals;
+            h = (right_boundary_b - left_boundary_a) / intervals;
             x = left_boundary_a;
-            for (i = 0; i < intervals; i++ )
+            for (i = 0; i < intervals; i++)
                 {
                     x += h;
                     integral_s += integrand_expression(x);
@@ -120,9 +122,8 @@ double num_comput_integral_r_re(double left_boundary_a, double right_boundary_b,
             h = (right_boundary_b - left_boundary_a) / intervals;
             x = left_boundary_a + h;
             for (i = 0; i <= intervals; i++)
-                {
+                {   x += h;
                     integral_s += integrand_expression(x);
-                    x += h;
                 }
             return integral_s * h;
 
@@ -136,8 +137,8 @@ double num_comput_integral_trapez (double left_boundary_a, double right_boundary
             x = left_boundary_a + h;
             for (i = 0; i <= (intervals - 1); i++)
                 {
-                    integral_s += (integrand_expression(x) + integrand_expression(x + h)) / 2;
                     x += h;
+                    integral_s += (integrand_expression(x) + integrand_expression(x + h)) / 2;
                 }
             return integral_s * h;
         }
